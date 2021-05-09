@@ -37,19 +37,27 @@ def main():
         
     for thisPath, dirs, files in os.walk(sourcePath):
         for file in files:
-            if any(file.lower().endswith(i) for i in Settings.ext):
-                #print(f'Found file: {os.path.join(thisPath,file)}')
-                try:
-                    os.rename(os.path.join(thisPath, file), os.path.join(Settings.outdir, file))
-                except FileExistsError as e:
-                    if Settings.compareFiles(os.path.join(thisPath, file), os.path.join(Settings.outdir, file)):
-                        #print('Duplicate file found')
-                        #print(str(e))
-                        continue
-                    else:
-                        print('These files have the same name, but are different.')
-                        print(str(e))
-                        exit() #In theory, change the destination name to something that doesn't exist, but I never encountered this case
+            duplicateIndex = 1
+            dupIndStr = ''
+            if any((dupIndStr + file).lower().endswith(i) for i in Settings.ext):
+                while duplicateIndex > 0:
+                    try:
+                        os.rename(os.path.join(thisPath, file), os.path.join(Settings.outdir, (dupIndStr + file)))
+                        break
+                    except FileExistsError as e:
+                        if Settings.compareFiles(os.path.join(thisPath, file), os.path.join(Settings.outdir, (dupIndStr + file))):
+                            if duplicateIndex > 1:
+                                print((dupIndStr + file))
+                            duplicateIndex = 0                            
+                            #print('Duplicate file found')
+                            #print(str(e))
+                            break
+                        else:
+                            dupIndStr = f'({duplicateIndex})'
+                            duplicateIndex += 1
+                            #print('These files have the same name, but are different.')
+                            #print(str(e))
+                        
 
 
 if __name__ == "__main__":
