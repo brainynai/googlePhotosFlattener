@@ -1,7 +1,9 @@
 import os
 
 class Settings:
-    outdir = r"C:\Users\Nai\Documents\Python\pullPics\pics"
+    outdir = r"C:\Users\Nai\Documents\Python\pullPics\pics" #Change as needed
+
+    #All relevant file extensions to move
     ext = ['ase', 'art', 'bmp', 'blp', 'cd5', 'cit', 'cpt', 'cr2', 'cut', 'dds',
            'dib', 'djvu', 'egt', 'exif', 'gif', 'gpl', 'grf', 'icns', 'ico', 'iff',
            'jng', 'jpeg', 'jpg', 'jfif', 'jp2', 'jps', 'lbm', 'max', 'miff', 'mng', 'msp',
@@ -16,6 +18,7 @@ class Settings:
            'mov', 'mp2', 'mp4', 'mpe', 'mpeg', 'mpg', 'mpv', 'mxf', 'nsv', 'ogg', 'ogv', 'qt', 'rm',
            'rmvb', 'roq', 'svi', 'vob', 'webm', 'wmv', 'yuv']
 
+    #Check if two files contain the same data (mods req'd for very large files)
     def compareFiles(filePath1, filePath2):
         with open(filePath1, 'rb') as f:
             data1 = f.read()
